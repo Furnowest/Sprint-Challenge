@@ -18,3 +18,76 @@
 // </div>
 //
 // Use your function to create a card for each of the articles and add the card to the DOM.
+axios.get(`https://lambda-times-backend.herokuapp.com/articles`)
+.then( function (response) 
+{
+    console.log(response);
+   
+     for(let i = 0; i < response.data.articles.javascript.length; i++)
+     {
+        cardCreator(response.data.articles.javascript[i]);
+     }
+    
+     for(let i = 0; i < response.data.articles.bootstrap.length; i++)
+     {
+        cardCreator(response.data.articles.bootstrap[i]);
+     }
+   
+     for(let i = 0; i < response.data.articles.technology.length; i++)
+     {
+        cardCreator(response.data.articles.technology[i]);
+     }
+    
+     for(let i = 0; i < response.data.articles.jquery.length; i++)
+     {
+        cardCreator(response.data.articles.jquery[i]);
+     }
+   
+     for(let i = 0; i < response.data.articles.node.length; i++)
+     {
+        cardCreator(response.data.articles.node[i]);
+     }
+
+
+})
+
+
+.catch( function (error) {
+    console.log(error);
+})
+
+function cardCreator(element) {
+
+const card = document.createElement('div');
+card.classList.add('card');
+
+const headLine = document.createElement('div');
+headLine.classList.add('headline');
+headLine.textContent = element.headline;
+
+const author = document.createElement('div');
+author.classList.add('author');
+
+const imageContainer = document.createElement('div');
+imageContainer.classList.add('img-container');
+
+const img = document.createElement('img');
+img.src = element.authorPhoto;
+
+const authorName = document.createElement('span');
+authorName.textContent = `By ${element.authorName}`;
+
+
+card.appendChild(headLine);
+card.appendChild(author);
+author.appendChild(imageContainer);
+imageContainer.appendChild(img);
+author.appendChild(authorName);
+
+
+const cardsContainer = document.querySelector('.cards-container');
+cardsContainer.appendChild(card);
+
+
+return card;
+}
